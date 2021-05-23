@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>    //count_if,sort
+using namespace std;
+struct sortuj{
+    bool operator()(int x,int y) const{return x%10<y%10;}
+};
+struct Zliczaj_5{
+    bool operator()(int k)const{return k==5;}
+};
+int main(){
+    std::vector<int>v={1,5,16,12,35,6,13,45,5,8};
+    std::cout<<std::count_if(begin(v),end(v),Zliczaj_5())<<"\n";
+    std::cout<<std::count_if(begin(v),end(v),[](int k){return k==5;}) <<"\n";
+    sort(begin(v),end(v),sortuj());
+    for (auto i = v.begin(); i != v.end(); ++i)
+        std::cout << *i << ' ';
+    cout<<"\n";
+    v={1,5,16,12,35,6,13,45,5,8};
+    sort(begin(v),end(v),[](int x, int y){return x%10<y%10;});
+    for (auto i = v.begin(); i != v.end(); ++i)
+        std::cout << *i << ' ';
+}
