@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+#include "string"
+#include "fstream"
+/*
+template <typename T>
+std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
+{
+    for(int i =0;i<v.size();i++)
+    {out<<v[i]<<" ";}
+    return out;
+}
+*/
+using namespace std;
+int main(){
+
+    fstream plik;
+    plik.open("pliki/instrukcje.txt", std::fstream::in | std::fstream::out);
+
+    vector<string> x;
+    string wyraz, rozwiazanie;
+    int dlugosc;
+    if(plik.good())
+    {
+        while(plik>>wyraz)
+        {
+            x.push_back(wyraz);
+        }
+        dlugosc = std::count(x.begin(),x.end(),"DOPISZ") - std::count(x.begin(),x.end(), "USUN");
+        cout<<dlugosc<<"\n";
+
+        for(int i = 0; i < x.size() - 1; i++)
+        {
+            string polecenie = x[i], litera = x[i+1];
+            if(polecenie == "DOPISZ")
+                rozwiazanie.append(litera);
+            else if(polecenie == "USUN")
+                rozwiazanie.pop_back();
+            else {
+                rozwiazanie.pop_back();
+                rozwiazanie.append(litera);
+            }  }
+
+    }
+    cout<<rozwiazanie;
+}
