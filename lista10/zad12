@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+
+template <typename T>
+std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
+{
+    for(int i =0;i<v.size();i++)
+    {out<<v[i]<<" ";}
+    return out;
+}
+
+int main(){
+    srand(time(nullptr));
+
+    std::vector<int> v(10);
+    std::vector<int> w(10);
+
+    std::iota(v.begin(),v.end(),0);
+    std::cout<<"v: "<<v;
+    int sum = std::accumulate(v.begin(),v.end(),0);
+    std::cout<<"sum: "<<sum<<std::endl;
+    std::transform(v.cbegin(),v.cend(),v.begin(), [](int n) {return n*n;});
+    std::cout<<"transform: "<<v<<std::endl;
+
+    std::generate(w.begin(),w.end(),[] (int n = rand()%13) {return n;});
+    std::cout<<"w: "<<w<<std::endl;
+    int w_max = *std::max_element(w.begin(),w.end(),[](int n, int m){return n<m;});
+    std::cout <<"w_max "<<w_max<<std::endl;
+    std::sort(w.begin(),w.end());
+    std::cout<<"w: "<<w<<std::endl;
+
+
+    //std::unique(w.begin(), w.end());
+    // std::cout<<"w,unique: "<<w;
+
+    w.erase(std::unique(w.begin(),w.end()),w.end());
+    std::cout<<"erase: "<<w<<std::endl;
+
+
+    //suma zbiorow AnB
+    std::vector <int> z;
+    std::set_intersection(v.begin(),v.end(),w.begin(),w.end(),std::back_inserter(z));
+    std::cout<<"v i w intersection"<<z;
+
+
+
+}
